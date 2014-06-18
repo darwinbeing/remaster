@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir $DIR_BUILD
+mkdir $DIR_BOOTSTRAP_CORE
+debootstrap --arch=i386 wheezy  $DIR_BOOTSTRAP_CORE

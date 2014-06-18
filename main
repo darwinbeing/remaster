@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Stops the script if you aren't running it as root.
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+echo "************************************"
+echo "CREATING CHROOT FOR CORE SWIFT LINUX"
+
+export DIR_REMASTER=$PWD
+DATE=`date +%Y%m%d_%H%M%S`
+export DIR_BUILD=/home/$SUDO_USER/build_swift_linux_$DATE
+export DIR_BOOTSTRAP_CORE=$DIR_BUILD/chroot_core
+sh $DIR_REMASTER/create_chroot_core
+
+echo "FINISHED CREATING CHROOT FOR CORE SWIFT LINUX"
+echo "*********************************************"
+
+echo "*************************************"
+echo "UPDATING SETTINGS IN CORE SWIFT LINUX"
+
+
+
+echo "FINISHED UPDATING SETTINGS IN CORE SWIFT LINUX"
+echo "**********************************************"
+
+# Wrap up
+chown -R $SUDO_USER:users $DIR_BUILD
