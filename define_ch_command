@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Commands in chroot
+# ch_comm $1 $2 $3 ->
+# cd into $1, chroot into $2, execute $3
+function ch_comm
+{
+  cd $1
+  chroot $2 $3
+}
