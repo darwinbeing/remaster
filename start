@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Stops the script if you aren't running it as root.
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+export DIR_REMASTER=$PWD
+DATE=`date +%Y%m%d_%H%M%S`
+
+DIR_PARENT=$PWD
+DIR_GRANDPARENT=`dirname $PWD`
+while [ $DIR_GRANDPARENT != "/home" ]; do
+  DIR_PARENT=$DIR_GRANDPARENT
+  DIR_GRANDPARENT=`dirname $DIR_PARENT`
+done
+
+export DIR_BUILD=$DIR_PARENT/build_swift_linux_$DATE
+echo Creating $DIR_BUILD
+mkdir $DIR_BUILD
+
+sh $DIR_REMASTER/remaster 2>&1 | tee $DIR_BUILD/remaster.log

@@ -9,9 +9,6 @@ fi
 echo "************************************"
 echo "CREATING CHROOT FOR CORE SWIFT LINUX"
 
-export DIR_REMASTER=$PWD
-DATE=`date +%Y%m%d_%H%M%S`
-export DIR_BUILD=/home/$SUDO_USER/build_swift_linux_$DATE
 export DIR_BOOTSTRAP_CORE=$DIR_BUILD/chroot_core
 sh $DIR_REMASTER/create_chroot_core
 
