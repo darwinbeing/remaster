@@ -17,6 +17,10 @@ while [ $DIR_GRANDPARENT != "/home" ]; do
 done
 
 export DIR_BUILD=$DIR_PARENT/build_swift_linux_$DATE
+#--------------------------------------------------
+# Disable the following command for production mode
+export DIR_BUILD=$DIR_PARENT/build_swift_linux_20140618_013927
+
 echo Creating $DIR_BUILD
 mkdir $DIR_BUILD
 

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Commands in chroot
+# chroot_general $1 $2 ->
+# cd into $DIR_BUILD, chroot into $1, execute $2
+chroot_general ()
+{
+  cd $DIR_BUILD
+  # Note that an argument with a space is actually treated as two arguments.
+  # This must be corrected.
+  dir_chroot=$1
+  shift
+  command_chroot=""
+  while [ $# -gt 0 ]
+    do
+      command_chroot=$command_chroot" "$1
+      shift
+  done 
+  chroot $dir_chroot $command_chroot
+}
+
+# Commands in chroot for Core Swift Linux
+# Execute $1 in chroot directory for Core Swift Linux
+chroot_core ()
+{
+  chroot_general $SUBDIR_CORE $1
+}
+
+# Commands in chroot for Diet Swift Linux
+chroot_diet ()
+{
+  chroot_general $SUBDIR_DIET $1
+}
+
+# Commands in chroot for Regular Swift Linux
+chroot_regular ()
+{
+  chroot_general $SUBDIR_REGULAR $1
+}
+
+# Commands in chroot for Special Edition Swift Linux
+# function chroot_special 
+# {
+# }

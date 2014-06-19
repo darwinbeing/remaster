@@ -1,0 +1,25 @@
+#!/bin/sh
+
+. $DIR_REMASTER/define_chroot_commands
+
+mkdir $DIR_CHROOT_DIET
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# The following line must be enabled in production mode
+# cp -rp $DIR_BOOTSTRAP_CORE/* $DIR_CHROOT_DIET
+
+rep1="deb http://http.debian.net/debian wheezy main contrib nonfree"
+rep2="# deb-src http://http.debian.net/debian wheezy main contrib nonfree"
+rep3="deb http://security.debian.org/ wheezy/updates main"
+rep4="# deb-src http://security.debian.org/ wheezy/updates main"
+rep5="deb http://packages.crunchbang.org/waldorf waldorf main"
+rep6="deb-src http://packages.crunchbang.org/waldorf waldorf main"
+
+echo "deb http://http.debian.net/debian wheezy main contrib nonfree" > $DIR_CHROOT_DIET/etc/apt/sources.list
+echo "# deb-src http://http.debian.net/debian wheezy main contrib nonfree" >> $DIR_CHROOT_DIET/etc/apt/sources.list
+echo "deb http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
+echo "# deb-src http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
+echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
+echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
+
+chroot_diet 'apt-get update'
