@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Stops the script if you aren't running it as root.
 if [ "$(id -u)" != "0" ]; then
@@ -19,7 +19,7 @@ done
 export DIR_BUILD=$DIR_PARENT/build_swift_linux_$DATE
 #--------------------------------------------------
 # Disable the following command for production mode
-export DIR_BUILD=$DIR_PARENT/build_swift_linux_20140618_013927
+export DIR_BUILD=$DIR_PARENT/build_swift_linux
 
 echo Creating $DIR_BUILD
 mkdir $DIR_BUILD

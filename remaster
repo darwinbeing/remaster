@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Stops the script if you aren't running it as root.
 if [ "$(id -u)" != "0" ]; then
@@ -13,7 +13,7 @@ export SUBDIR_CORE="chroot_core"
 export DIR_BOOTSTRAP_CORE=$DIR_BUILD/$SUBDIR_CORE
 #+++++++++++++++++++++++++++++++++++++++++++++++++
 # Enable the following command for production mode
-# sh $DIR_REMASTER/create_chroot_core
+#sh $DIR_REMASTER/create_chroot_core
 
 echo "FINISHED CREATING CHROOT FOR CORE SWIFT LINUX"
 echo "*********************************************"
@@ -27,15 +27,17 @@ echo "FINISHED UPDATING SETTINGS IN CORE SWIFT LINUX"
 echo "**********************************************"
 
 echo "**********************************************"
-echo "CREATING CHROOT DIRECTORY FOR DIET SWIFT LINUX"
+echo "CREATING CHROOT FOR DIET SWIFT LINUX"
 export SUBDIR_DIET="chroot_diet"
 export DIR_CHROOT_DIET=$DIR_BUILD/$SUBDIR_DIET
-#+++++++++++++++++++++++++++++++++++++++++++++++++
-# Enable the following command for production mode
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# The following line must be enabled in production mode
 sh $DIR_REMASTER/create_chroot_diet
 
 echo "FINISHED CREATING CHROOT FOR DIET SWIFT LINUX"
 echo "*********************************************"
 
 # Wrap up
-chown -R $SUDO_USER:users $DIR_BUILD
+#+++++++++++++++++++++++++++++++++++++++++++++++++
+# Enable the following command for production mode
+# chown -R $SUDO_USER:users $DIR_BUILD

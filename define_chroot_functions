@@ -1,0 +1,162 @@
+#!/bin/bash
+
+# create_chroot_general $1 $2
+# Duplicates $1 as $2
+# $1 and $2 are the full paths
+create_chroot_general ()
+{
+  mkdir $2
+  cp -a $1/* $2
+}
+
+create_chroot_diet ()
+{
+  echo "COPYING "$DIR_BOOTSTRAP_CORE" to "$DIR_CHROOT_DIET
+  create_chroot_general $DIR_BOOTSTRAP_CORE $DIR_CHROOT_DIET
+}
+
+# start_chroot_general $1
+# $1 is the full path
+start_chroot_general ()
+{
+  mount --bind /proc $1/proc
+}
+
+start_chroot_diet ()
+{
+  echo "PREPARING TO CHROOT INTO DIET SWIFT LINUX"
+  start_chroot_general $DIR_CHROOT_DIET  
+  echo "READY TO CHROOT INTO DIET SWIFT LINUX"
+}
+
+# chroot_general $1 $2
+# cd into $DIR_BUILD, chroot into $1, execute $2
+# NOTE: $1 is the SUB-directory, NOT the full path
+exec_chroot_general ()
+{
+  cd $DIR_BUILD
+  # Note that an argument with a space is actually treated as two arguments.
+  # This must be corrected.
+  dir_chroot=$1
+  shift
+  command_chroot=""
+  while [ $# -gt 0 ]
+    do
+      command_chroot=$command_chroot" "$1
+      shift
+  done 
+  chroot $dir_chroot $command_chroot
+}
+
+# exec_chroot_core $1
+# $1 = command
+exec_chroot_core ()
+{
+  exec_chroot_general $SUBDIR_CORE $1
+}
+
+# exec_chroot_diet $1
+# $1 = command
+exec_chroot_diet ()
+{
+  exec_chroot_general $SUBDIR_DIET $1
+}
+
+# Commands in chroot for Regular Swift Linux
+exec_chroot_regular ()
+{
+  exec_chroot_general $SUBDIR_REGULAR $1
+}
+
+# end_chroot_general $1
+# Unmounts $1
+end_chroot_general ()
+{
+	umount $1/proc	
+}
+
+end_chroot_diet ()
+{
+	echo "WINDING DOWN CHROOT OPERATIONS IN DIET SWIFT LINUX"
+	end_chroot_general $DIR_CHROOT_DIET 
+	echo "FINISHED CHROOTING INTO DIET SWIFT LINUX"
+}
+
+
+# Commands in chroot for Special Edition Swift Linux
+# function chroot_special 
+# {
+# }
+
+# Knoppix pre-chroot procedure:
+
+#mount --bind /dev $PFAD/knx/source/KNOPPIX/dev#
+#mount -t proc proc $PFAD/knx/source/KNOPPIX/proc#
+#mount -t sysfs sysfs $PFAD/knx/source/KNOPPIX/sys
+#mount --bind /dev/pts $PFAD/knx/source/KNOPPIX/dev/pts#
+#mount --bind /tmp $PFAD/knx/source/KNOPPIX/tmp#
+# Allow X-based programs in chroot
+
+
+# antiX Linux pre-chroot procedure:
+# function mount_all {
+# Mount /proc and /sys and set up networking (I prefer to mount temporarily resolv.conf instead of copying it)
+#   mount --bind /proc $1/proc#
+#   mount --bind /sys $1/sys
+#   mount --bind /dev $1/dev#
+#   mount --bind /dev/pts $1/dev/pts#
+#   mount --bind /tmp $1/tmp#
+# }
+#
+# LMDE 
+# PRE-CHROOT
+# print _("Try: Copying DNS info...")
+#            
+#            # mount /proc
+#            print _("Try: Mounting /proc filesystem...")
+#            os.popen('mount --bind /proc \"' + os.path.join(self.customDir, "custom_root/proc") + '\"')
+
+
+
+
+
+
+# antiX Linux post-chroot procedure:
+# function umount_all {
+#   grep "$1" /etc/mtab >/dev/null && {
+#     umount $1/tmp
+#     umount $1/dev/pts
+#     umount $1/dev
+#     umount $1/sys
+#     umount $1/proc
+#     umount $1/etc/resolv.conf
+#   }
+#	grep "gshadow" /etc/mtab >/dev/null && {
+#     cd /
+#     umount $ROOTPART/etc/group
+#     umount $ROOTPART/etc/gshadow
+#     umount $ROOTPART/etc/hostname
+#     umount $ROOTPART/etc/hosts
+#     umount $ROOTPART/etc/passwd
+#     umount $ROOTPART/etc/shadow
+#     umount $ROOTPART/etc/sudoers
+#     umount $ROOTPART/home
+#     cd $REM
+#   }
+# }
+
+
+
+# LMDE POST-CHROOT
+# restore wgetrc
+#            # umount /proc
+#            print _("Umounting /proc...")
+#            os.popen('umount \"' + os.path.join(self.customDir, "custom_root/proc/") + '\"')
+
+
+
+# chroot_general $1 $2 ->
+# cd into $DIR_BUILD, chroot into $1, execute $2
+#pre_chroot_general ()
+#{
+#}

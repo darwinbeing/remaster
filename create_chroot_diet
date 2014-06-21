@@ -1,19 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-. $DIR_REMASTER/define_chroot_commands
+# Load the chroot_functions
+. $DIR_REMASTER/define_chroot_functions
 
-mkdir $DIR_CHROOT_DIET
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# The following line must be enabled in production mode
-# cp -rp $DIR_BOOTSTRAP_CORE/* $DIR_CHROOT_DIET
-
-rep1="deb http://http.debian.net/debian wheezy main contrib nonfree"
-rep2="# deb-src http://http.debian.net/debian wheezy main contrib nonfree"
-rep3="deb http://security.debian.org/ wheezy/updates main"
-rep4="# deb-src http://security.debian.org/ wheezy/updates main"
-rep5="deb http://packages.crunchbang.org/waldorf waldorf main"
-rep6="deb-src http://packages.crunchbang.org/waldorf waldorf main"
+create_chroot_diet
 
 echo "deb http://http.debian.net/debian wheezy main contrib nonfree" > $DIR_CHROOT_DIET/etc/apt/sources.list
 echo "# deb-src http://http.debian.net/debian wheezy main contrib nonfree" >> $DIR_CHROOT_DIET/etc/apt/sources.list
@@ -22,4 +12,15 @@ echo "# deb-src http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_
 echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
 echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_DIET/etc/apt/sources.list
 
-chroot_diet 'apt-get update'
+start_chroot_diet
+echo "UPDATING AND ADDING PACKAGES IN DIET SWIFT LINUX"
+exec_chroot_diet 'apt-get update'
+exec_chroot_diet 'apt-get install -y debian-installer-launcher sudo'
+exec_chroot_diet 'apt-get install -y live-manual live-tools'
+exec_chroot_diet 'apt-get install -y task-english'
+exec_chroot_diet 'apt-get install -y console-tools'
+exec_chroot_diet 'apt-get install -y memtest86+'
+exec_chroot_diet 'apt-get install -y task-laptop task-ssh-server'
+exec_chroot_diet 'apt-get install -y cb-metapackage'
+echo "FINISHED UPDATING AND ADDING PACKAGES IN DIET SWIFT LINUX"
+end_chroot_diet
