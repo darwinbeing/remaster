@@ -6,14 +6,26 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+echo "**********************************"
+echo "CREATING CHROOT FOR MINIMAL DEBIAN"
+
+export SUBDIR_DEB="chroot_deb"
+export DIR_CHROOT_DEB=$DIR_BUILD/$SUBDIR_DEB
+#+++++++++++++++++++++++++++++++++++++++++++++++++
+# Enable the following command for production mode
+#bash $DIR_REMASTER/create_chroot_deb
+
+echo "FINISHED CREATING CHROOT FOR MINIMAL DEBIAN"
+echo "*********************************************"
+
 echo "************************************"
 echo "CREATING CHROOT FOR CORE SWIFT LINUX"
 
 export SUBDIR_CORE="chroot_core"
-export DIR_BOOTSTRAP_CORE=$DIR_BUILD/$SUBDIR_CORE
+export DIR_CHROOT_CORE=$DIR_BUILD/$SUBDIR_CORE
 #+++++++++++++++++++++++++++++++++++++++++++++++++
 # Enable the following command for production mode
-#sh $DIR_REMASTER/create_chroot_core
+bash $DIR_REMASTER/deb_to_core
 
 echo "FINISHED CREATING CHROOT FOR CORE SWIFT LINUX"
 echo "*********************************************"
@@ -32,7 +44,7 @@ export SUBDIR_DIET="chroot_diet"
 export DIR_CHROOT_DIET=$DIR_BUILD/$SUBDIR_DIET
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # The following line must be enabled in production mode
-sh $DIR_REMASTER/create_chroot_diet
+# sh $DIR_REMASTER/create_chroot_diet
 
 echo "FINISHED CREATING CHROOT FOR DIET SWIFT LINUX"
 echo "*********************************************"

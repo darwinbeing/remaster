@@ -15,6 +15,9 @@ echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROO
 start_chroot_diet
 echo "UPDATING AND ADDING PACKAGES IN DIET SWIFT LINUX"
 exec_chroot_diet 'apt-get update'
+
+echo "en_US.UTF-8 UTF-8" >> $DIR_CHROOT_DIET/etc/locale.gen
+
 exec_chroot_diet 'apt-get install -y debian-installer-launcher sudo'
 exec_chroot_diet 'apt-get install -y live-manual live-tools'
 exec_chroot_diet 'apt-get install -y task-english'

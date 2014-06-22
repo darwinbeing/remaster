@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mkdir $DIR_CHROOT_DEB
+debootstrap --arch=i386 wheezy  $DIR_CHROOT_DEB

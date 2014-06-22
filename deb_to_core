@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Load the chroot_functions
+. $DIR_REMASTER/define_chroot_functions
+
+create_chroot_core
+
+echo "deb http://http.debian.net/debian wheezy main contrib nonfree" > $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "# deb-src http://http.debian.net/debian wheezy main contrib nonfree" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "deb http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "# deb-src http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+
+start_chroot_core
+echo "UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
+exec_chroot_core 'apt-get update'
+
+echo "en_US.UTF-8 UTF-8" >> $DIR_CHROOT_CORE/etc/locale.gen
+exec_chroot_core '/usr/sbin/locale-gen'
+
+exec_chroot_core 'apt-get install -y debian-installer-launcher sudo'
+exec_chroot_core 'apt-get install -y live-manual live-tools'
+exec_chroot_core 'apt-get install -y task-english'
+exec_chroot_core 'apt-get install -y console-tools'
+# exec_chroot_core 'apt-get install -y memtest86+'
+# exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
+# exec_chroot_core 'apt-get install -y cb-metapackage'
+# echo "FINISHED UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
+end_chroot_core
+

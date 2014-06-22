@@ -1,4 +1,0 @@
-#!/bin/bash
-
-mkdir $DIR_BOOTSTRAP_CORE
-debootstrap --arch=i386 wheezy  $DIR_BOOTSTRAP_CORE

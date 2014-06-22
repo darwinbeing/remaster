@@ -9,9 +9,15 @@ create_chroot_general ()
   cp -a $1/* $2
 }
 
+create_chroot_core ()
+{
+  echo "COPYING "$DIR_CHROOT_DEB" to "$DIR_CHROOT_CORE
+  create_chroot_general $DIR_CHROOT_DEB $DIR_CHROOT_CORE
+}
+
 create_chroot_diet ()
 {
-  echo "COPYING "$DIR_BOOTSTRAP_CORE" to "$DIR_CHROOT_DIET
+  echo "COPYING "$DIR_CHROOT_CORE" to "$DIR_CHROOT_DIET
   create_chroot_general $DIR_BOOTSTRAP_CORE $DIR_CHROOT_DIET
 }
 
@@ -20,6 +26,13 @@ create_chroot_diet ()
 start_chroot_general ()
 {
   mount --bind /proc $1/proc
+}
+
+start_chroot_core ()
+{
+  echo "PREPARING TO CHROOT INTO CORE SWIFT LINUX"
+  start_chroot_general $DIR_CHROOT_CORE
+  echo "READY TO CHROOT INTO CORE SWIFT LINUX"
 }
 
 start_chroot_diet ()
@@ -75,12 +88,14 @@ end_chroot_general ()
 	umount $1/proc	
 }
 
-end_chroot_diet ()
+end_chroot_core ()
 {
-	echo "WINDING DOWN CHROOT OPERATIONS IN DIET SWIFT LINUX"
-	end_chroot_general $DIR_CHROOT_DIET 
-	echo "FINISHED CHROOTING INTO DIET SWIFT LINUX"
+	echo "WINDING DOWN CHROOT OPERATIONS IN CORE SWIFT LINUX"
+	end_chroot_general $DIR_CHROOT_CORE
+	echo "FINISHED CHROOTING INTO CORE SWIFT LINUX"
 }
+
+
 
 
 # Commands in chroot for Special Edition Swift Linux

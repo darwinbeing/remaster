@@ -24,4 +24,4 @@ export DIR_BUILD=$DIR_PARENT/build_swift_linux
 echo Creating $DIR_BUILD
 mkdir $DIR_BUILD
 
-sh $DIR_REMASTER/remaster 2>&1 | tee $DIR_BUILD/remaster.log
+bash $DIR_REMASTER/remaster 2>&1 | tee $DIR_BUILD/remaster.log
