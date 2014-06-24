@@ -13,19 +13,22 @@ echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CO
 echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 
 start_chroot_core
+
 echo "UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
 exec_chroot_core 'apt-get update'
 
-echo "en_US.UTF-8 UTF-8" >> $DIR_CHROOT_CORE/etc/locale.gen
-exec_chroot_core '/usr/sbin/locale-gen'
+# The command 'locale-gen en_US.UTF-8' is required to provide proper locale settings.
+# It requires having the locales package.
+# Not providing the proper locale settings leads to error messages and a dialog box
+# when installing console-tools.
 
 exec_chroot_core 'apt-get install -y debian-installer-launcher sudo'
 exec_chroot_core 'apt-get install -y live-manual live-tools'
 exec_chroot_core 'apt-get install -y task-english'
-exec_chroot_core 'apt-get install -y console-tools'
-# exec_chroot_core 'apt-get install -y memtest86+'
-# exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
-# exec_chroot_core 'apt-get install -y cb-metapackage'
-# echo "FINISHED UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
+exec_chroot_core "echo -ne '\n\n' | apt-get install -y console-tools"
+#exec_chroot_core 'apt-get install -y memtest86+'
+#exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
+#exec_chroot_core 'apt-get install -y cb-metapackage'
+echo "FINISHED UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
 end_chroot_core
 
