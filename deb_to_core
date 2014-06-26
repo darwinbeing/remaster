@@ -12,6 +12,12 @@ echo "# deb-src http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_
 echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 echo "deb-src http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 
+echo 'LANG="en_US.UTF-8"' >> $DIR_CHROOT_CORE/etc/default/locale
+echo 'LC_CTYPE="en_US.UTF-8"' >> $DIR_CHROOT_CORE/etc/default/locale
+echo 'LC_MESSAGES="en_US.UTF-8"' >> $DIR_CHROOT_CORE/etc/default/locale
+echo 'LC_ALL="en_US.UTF-8"' >> $DIR_CHROOT_CORE/etc/default/locale
+echo "en_US.UTF-8" >> $DIR_CHROOT_CORE/etc/locale.gen
+
 start_chroot_core
 
 echo "UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
@@ -23,6 +29,8 @@ exec_chroot_core 'rm crunchbang.key'
 
 exec_chroot_core 'apt-get update'
 
+exec_chroot_core 'apt-get install -y locales'
+
 exec_chroot_core 'apt-get install -y debian-installer-launcher sudo'
 exec_chroot_core 'apt-get install -y live-manual live-tools'
 exec_chroot_core 'apt-get install -y task-english'
@@ -30,8 +38,7 @@ exec_chroot_core 'apt-get install -y task-english'
 # Automatically press Enter twice - once to accept the default keyboard 
 # configuration and once to accept the default language setting.
 # echo -ne '\n\n' | apt-get install -y console-tools
-exec_chroot_core "echo -ne '\n\n' | apt-get install -y console-tools"
-echo -ne '\n\n'
+exec_chroot_core "apt-get install -y console-tools"
 
 #exec_chroot_core 'apt-get install -y memtest86+'
 #exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
