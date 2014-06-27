@@ -25,6 +25,8 @@ create_chroot_diet ()
 # $1 is the full path
 start_chroot_general ()
 {
+    mount --bind /dev $1/dev
+    mount --bind /dev/pts $1/dev/pts
     mount --bind /proc $1/proc
     mount --bind /sys $1/sys
     export DEBIAN_FRONTEND="noninteractive"
@@ -48,7 +50,9 @@ start_chroot_diet ()
 end_chroot_general ()
 {
   umount $1/sys
-  umount $1/proc
+  umount $1/proc  
+  umount $1/dev/pts
+  umount $1/dev
 }
 
 end_chroot_core ()
