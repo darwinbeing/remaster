@@ -47,10 +47,10 @@ exec_chroot_core 'apt-get install -y task-english'
 # echo -ne '\n\n' | apt-get install -y console-tools
 exec_chroot_core "apt-get install -y console-tools"
 
-exec_chroot_core 'apt-get install -y memtest86+'
-exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
+# exec_chroot_core 'apt-get install -y memtest86+'
+# exec_chroot_core 'apt-get install -y task-laptop task-ssh-server'
 
-exec_chroot_core 'apt-get install -y cb-metapackage'
+# exec_chroot_core 'apt-get install -y cb-metapackage'
 echo "FINISHED UPDATING AND ADDING PACKAGES IN CORE SWIFT LINUX"
 end_chroot_core
 

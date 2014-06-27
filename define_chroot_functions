@@ -25,13 +25,10 @@ create_chroot_diet ()
 # $1 is the full path
 start_chroot_general ()
 {
-  	mount --bind /proc $1/proc
+    mount --bind /proc $1/proc
     mount --bind /sys $1/sys
-    mount --bind /dev $1/dev
-    mount --bind /dev/pts $1/dev/pts
-    mount --bind /tmp $1/tmp
-    mount --bind /etc/resolv.conf $1/etc/resolv.conf
     export DEBIAN_FRONTEND="noninteractive"
+    export DEBCONF_NOWARNINGS="true"
 }
 
 start_chroot_core ()
@@ -48,18 +45,10 @@ start_chroot_diet ()
   echo "READY TO CHROOT INTO DIET SWIFT LINUX"
 }
 
-# end_chroot_general $1
-# Unmounts $1
 end_chroot_general ()
 {
-  grep "$1" /etc/mtab >/dev/null && {
-    umount $1/tmp
-    umount $1/dev/pts
-    umount $1/dev
-    umount $1/sys
-    umount $1/proc
-    umount $1/etc/resolv.conf
-  }
+  umount $1/sys
+  umount $1/proc
 }
 
 end_chroot_core ()
