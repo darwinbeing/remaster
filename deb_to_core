@@ -6,8 +6,8 @@
 create_chroot_core
 
 # Update the /etc/apt/sources.list file
-echo "deb http://http.debian.net/debian wheezy main contrib nonfree" > $DIR_CHROOT_CORE/etc/apt/sources.list
-echo "# deb-src http://http.debian.net/debian wheezy main contrib nonfree" >> $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "deb http://http.debian.net/debian wheezy main contrib non-free" > $DIR_CHROOT_CORE/etc/apt/sources.list
+echo "# deb-src http://http.debian.net/debian wheezy main contrib non-free" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 echo "deb http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 echo "# deb-src http://security.debian.org/ wheezy/updates main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
 echo "deb http://packages.crunchbang.org/waldorf waldorf main" >> $DIR_CHROOT_CORE/etc/apt/sources.list
@@ -40,7 +40,6 @@ exec_chroot_core 'apt-get install -y task-english'
 
 # Automatically press Enter twice - once to accept the default keyboard 
 # configuration and once to accept the default language setting.
-# echo -ne '\n\n' | apt-get install -y console-tools
 exec_chroot_core "apt-get install -y console-tools"
 
 # exec_chroot_core 'apt-get install -y memtest86+'
